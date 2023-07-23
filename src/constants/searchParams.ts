@@ -1,3 +1,3 @@
-const params = ['make', 'model', 'year', 'color', 'price'];
+const params = ['make', 'model', 'year', 'color', 'price'] as const;
 
 export { params };
