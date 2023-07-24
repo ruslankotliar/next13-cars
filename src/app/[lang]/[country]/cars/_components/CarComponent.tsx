@@ -25,7 +25,9 @@ export function CarComponent({ car }: { car: Car }) {
         />
       </div>
       <div>
-        <p>{`${car.make} ${car.model}`}</p>
+        <p>
+          {car.make} {car.model}
+        </p>
         <p>{`Price: $${car.price}`}</p>
       </div>
     </div>
