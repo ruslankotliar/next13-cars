@@ -1,5 +1,5 @@
 export const dynamicParams = false;
-import { Car } from '@/types';
+import { Car, Params } from '@/types';
 import { DetailsComponent } from './_components';
 
 const fetchSingleCar = async (carId: string) => {
@@ -14,7 +14,7 @@ const fetchSingleCar = async (carId: string) => {
   }
 };
 
-export default async function Page({ params }: { params: { carId: string } }) {
+export default async function Page({ params }: { params: Params }) {
   const { carId } = params;
   const car = await fetchSingleCar(carId);
 
