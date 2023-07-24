@@ -3,6 +3,7 @@ import { defaultLocale, dictionaries, locales } from '@/constants';
 import { LocaleSource, ValidLocale } from '@/types';
 
 export const getTranslator = async (locale: ValidLocale) => {
+  console.log(dictionaries);
   const dictionary = await dictionaries[locale]();
   return (key: string, params?: { [key: string]: string | number }) => {
     let translation = key
