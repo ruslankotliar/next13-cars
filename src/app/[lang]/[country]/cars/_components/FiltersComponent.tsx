@@ -19,9 +19,9 @@ export function FiltersComponent() {
   return (
     <section>
       <button
-        onClick={() => {
-          router.push(`${pathname}?${createQueryString('model', 'Mustang')}`);
-        }}
+        onClick={() =>
+          router.push(`${pathname}?${createQueryString('model', 'Mustang')}`)
+        }
       >
         fetch!
       </button>
