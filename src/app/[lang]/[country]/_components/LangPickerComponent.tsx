@@ -1,16 +1,21 @@
 'use client';
 
-import { locales } from '@/constants';
-import { ValidLocale } from '@/types';
-import { getLocalePartsFrom, pathnameIsMissingValidLocale } from '@/utils';
-import { useParams, usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
+import { locales } from '@/constants';
+import { Params, SearchParams, ValidLocale } from '@/types';
+import { getLocalePartsFrom, pathnameIsMissingValidLocale } from '@/utils/i18n';
 
 export function LangPickerComponent() {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
-
+  const { lang, country } = useParams();
+  const searchParams = useSearchParams()! as any;
   const handleChangeLocale = (e: ChangeEvent<HTMLSelectElement>) => {
     const { lang: newLang, country: newCountry } = getLocalePartsFrom({
       locale: e.target.value,
@@ -19,17 +24,13 @@ export function LangPickerComponent() {
     const newPath = pathnameIsMissingValidLocale(pathname)
       ? `/${newLang}/${newCountry}${pathname}`
       : pathname
-          .replace(params.lang as string, newLang)
-          .replace(params.country as string, newCountry);
+          .replace(lang as string, newLang)
+          .replace(country as string, newCountry);
 
-    router.push(newPath);
+    router.push(`${newPath}?${searchParams}`);
   };
-
   const getCurrentLocale = (): string =>
-    params.lang && params.country
-      ? `${params.lang}-${(params.country + '').toUpperCase()}`
-      : locales[0];
-
+    lang && country ? `${lang}-${(country + '').toUpperCase()}` : locales[0];
   return (
     <div>
       <select

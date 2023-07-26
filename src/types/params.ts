@@ -4,4 +4,12 @@ type Params = {
   carId?: string;
 };
 
-export type { Params };
+type SearchParams = {
+  make?: string;
+  model?: string;
+  year?: string;
+  color?: string;
+  price?: string;
+};
+
+export type { Params, SearchParams };

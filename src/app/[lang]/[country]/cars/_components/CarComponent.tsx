@@ -3,7 +3,7 @@
 import { Car } from '@/types';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import carImg from '../../../../public/car-single.jpg';
+import carImg from '../../../../../../public/car-single.jpg';
 
 export function CarComponent({ car }: { car: Car }) {
   const router = useRouter();

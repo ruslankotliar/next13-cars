@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@types/accept-language-parser": "^1.5.3",
-    "@types/mongodb": "^4.0.7",
-    "@types/mongoose": "^5.11.97",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
@@ -21,7 +19,7 @@
     "eslint-config-next": "13.4.10",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.0",
-    "next": "13.4.10",
+    "next": "^13.4.12",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",

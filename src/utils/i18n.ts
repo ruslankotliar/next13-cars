@@ -4,6 +4,7 @@ import { LocaleSource, ValidLocale } from '@/types';
 
 export const getTranslator = async (locale: ValidLocale) => {
   const dictionary = await dictionaries[locale]();
+
   return (key: string, params?: { [key: string]: string | number }) => {
     let translation = key
       .split('.')

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getLocalePartsFrom, getTranslator } from '@/utils';
 import { locales } from '@/constants';
 import { LangPickerComponent } from './_components';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,7 +37,9 @@ export default async function Layout({
                 {translate('header.title', { year: new Date().getFullYear() })}
               </Link>
             </div>
-            <LangPickerComponent />
+            <Suspense fallback={<div>Loading</div>}>
+              <LangPickerComponent />
+            </Suspense>
           </header>
           <main className='h-screen pt-16'>{children}</main>
         </div>

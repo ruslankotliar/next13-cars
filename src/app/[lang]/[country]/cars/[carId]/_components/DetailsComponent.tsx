@@ -1,6 +1,6 @@
 import { Car } from '@/types';
 import Image from 'next/image';
-import carImg from '../../../../../public/car-single.jpg';
+import carImg from '../../../../../../../public/car-single.jpg';
 
 export function DetailsComponent({ car }: { car: Car }) {
   return (
