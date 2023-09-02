@@ -11,7 +11,7 @@ const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
       params
     );
     const response = await fetch(fetchURL);
-    
+
     const data = await response.json();
 
     return data;
@@ -27,7 +27,7 @@ export default async function Page({
   params: Params;
   searchParams: SearchParams;
 }) {
-  const car = await fetchSingleCar(searchParams, params);
+  const car: Car = await fetchSingleCar(searchParams, params);
 
   return (
     <section className='w-40 h-auto'>

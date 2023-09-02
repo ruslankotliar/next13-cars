@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const mongoDB = process.env.MONGO_URI;
+const mongoDB = process.env.MONGODB_URI;
 
 let isConnected = false; // track the connection
 
