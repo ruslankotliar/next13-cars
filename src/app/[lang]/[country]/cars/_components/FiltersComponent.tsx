@@ -23,8 +23,9 @@ export function FiltersComponent() {
         onClick={() => {
           router.push(`${pathname}?${createQueryString('model', 'Mustang')}`);
         }}
+        data-editable='filters-fetch-button'
       >
-        fetch!
+        Fetch All Data with Filters!
       </button>
     </section>
   );

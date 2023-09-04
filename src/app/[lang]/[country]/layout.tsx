@@ -50,7 +50,7 @@ async function HeaderComponent({
     <header className='absolute top-0 flex justify-around w-full py-5 text-xl z-20 bg-primary-color'>
       <div>
         <Link href={`/${lang}/${country}`}>
-          <b>CarExpert</b>{' '}
+          <b data-editable='main-layout-logo'>CarExpert</b>{' '}
           {translate('header.title', {
             year: new Date().getFullYear(),
           })}

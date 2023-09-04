@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from 'next/navigation';
 import { locales } from '@/constants';
-import { Params, SearchParams, ValidLocale } from '@/types';
+import { ValidLocale } from '@/types';
 import { getLocalePartsFrom, pathnameIsMissingValidLocale } from '@/utils/i18n';
 
 export function LangPickerComponent() {

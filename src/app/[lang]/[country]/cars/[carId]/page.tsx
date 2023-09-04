@@ -1,7 +1,6 @@
-export const dynamicParams = false;
 import { Car, Params, SearchParams } from '@/types';
-import { DetailsComponent } from './_components';
 import { generateFetchURL } from '@/helpers';
+import { DetailsComponent } from '../../_components';
 
 const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
   try {

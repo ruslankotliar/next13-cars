@@ -1,6 +1,6 @@
 import { Car } from '@/types';
 import Image from 'next/image';
-import carImg from '../../../../../../../public/car-single.jpg';
+import carImg from '../../../../../public/car-single.jpg';
 
 export function DetailsComponent({ car }: { car: Car }) {
   return (
@@ -17,7 +17,10 @@ export function DetailsComponent({ car }: { car: Car }) {
       </div>
       <div>
         <p>{`${car.make} ${car.model}`}</p>
-        <p>{`Price: $${car.price}`}</p>
+        <p>
+          <b data-editable={'car-details-price'}>Price: $</b>
+          {car.price}
+        </p>
       </div>
     </div>
   );
