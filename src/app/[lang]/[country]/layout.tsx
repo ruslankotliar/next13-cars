@@ -1,10 +1,12 @@
-import { ValidLocale } from '@/types';
 import './globals.css';
+import { Params } from '@/types';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
-import { getLocalePartsFrom, getTranslator } from '@/utils';
+import { getLocalePartsFrom } from '@/utils';
 import { locales } from '@/constants';
+import { LangPickerComponent } from './_components';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,33 +15,41 @@ export const metadata: Metadata = {
   description: 'Application to find a car',
 };
 
-export default async function Layout({
+export default function Layout({
   children,
-  params: { lang, country },
+  params,
 }: {
   children: React.ReactNode;
-  params: { lang: string; country: string };
+  params: Params;
 }) {
-  const translate = await getTranslator(
-    `${lang}-${country.toUpperCase()}` as ValidLocale // our middleware ensures this is valid
-  );
-
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='relative'>
-          <header className='absolute top-0 flex justify-center w-screen py-5 text-xl z-10 bg-primary-color'>
-            <div>
-              <Link href={`/${lang}/${country}`}>
-                <b>CarExpert</b>{' '}
-                {translate('header.title', { year: new Date().getFullYear() })}
-              </Link>
-            </div>
-          </header>
-          <main className='h-screen pt-16'>{children}</main>
-        </div>
+        <HeaderComponent params={params} />
+        <main className='absolute top-20 w-full z-19'>{children}</main>
       </body>
     </html>
+  );
+}
+
+async function HeaderComponent({
+  params: { lang, country },
+}: {
+  params: Params;
+}) {
+  return (
+    <header className='absolute top-0 w-full z-20 py-5 bg-white border-b'>
+      <nav className='flex justify-around items-center h-10 text-xl'>
+        <div>
+          <Link href={`/${lang}/${country}`}>
+            <b data-editable='main-layout-logo'>CarExpert</b>
+          </Link>
+        </div>
+        <Suspense fallback={<div>Loading</div>}>
+          <LangPickerComponent />
+        </Suspense>
+      </nav>
+    </header>
   );
 }
 

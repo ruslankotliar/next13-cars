@@ -1,7 +1,7 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function FiltersComponent() {
   const router = useRouter();
@@ -16,14 +16,17 @@ export function FiltersComponent() {
     },
     [searchParams]
   );
+
   return (
     <section>
       <button
-        onClick={() =>
-          router.push(`${pathname}?${createQueryString('model', 'Mustang')}`)
-        }
+        onClick={() => {
+          router.push(`${pathname}?${createQueryString('model', 'Mustang')}`);
+        }}
+        data-editable='filters-fetch-button'
+        className='text-black'
       >
-        fetch!
+        Fetch All Data with Filters!
       </button>
     </section>
   );

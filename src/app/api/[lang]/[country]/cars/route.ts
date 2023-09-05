@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getReasonPhrase, connectToDB } from '@/utils';
+import { getReasonPhrase } from '@/utils';
 import { StatusCodes } from '@/constants';
 import { Car } from '@/models';
 
 import { generateFilters } from '@/helpers';
+
+import { connectToDB } from '@/utils/database';
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,6 +18,15 @@ export async function GET(request: NextRequest) {
         },
       },
       { $sort: { updatedAt: -1 } },
+      {
+        $facet: {
+          metadata: [
+            { $count: 'total' },
+            { $addFields: { page: Number(3) } },
+          ],
+          data: [{ $skip: 20 }, { $limit: 10 }], // add projection here wish you re-shape the docs
+        },
+      },
     ]);
 
     return NextResponse.json(cars);

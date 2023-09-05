@@ -1,9 +1,8 @@
 'use client';
 
 import { Car } from '@/types';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import carImg from '../../../../public/car-single.jpg';
+import { DetailsComponent } from '../../_components';
 
 export function CarComponent({ car }: { car: Car }) {
   const router = useRouter();
@@ -11,25 +10,10 @@ export function CarComponent({ car }: { car: Car }) {
 
   return (
     <div
-      className='w-40 h-auto hover:cursor-pointer'
+      className='hover:cursor-pointer bg-white w-96 p-6 shadow-md rounded-lg'
       onClick={() => router.push(`${pathname}/${car._id}`)}
     >
-      <div className='relative'>
-        <Image
-          src={carImg}
-          alt={`Image of a single car, ${car.model}`}
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      </div>
-      <div>
-        <p>
-          {car.make} {car.model}
-        </p>
-        <p>{`Price: $${car.price}`}</p>
-      </div>
+      <DetailsComponent car={car} />
     </div>
   );
 }

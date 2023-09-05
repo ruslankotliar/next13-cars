@@ -1,30 +1,36 @@
-import { Car } from '@/types';
-
+import { Car, Params, SearchParams } from '@/types';
 import { CarComponent } from './CarComponent';
+import { generateFetchURL } from '@/helpers';
 
-const fetchCars = async (searchParams: any) => {
+const fetchCars = async (searchParams: SearchParams, params: Params) => {
   try {
-    const params = new URLSearchParams(searchParams);
-    const response = await fetch(`${process.env.URL}/api/cars?${params}`);
+    const fetchURL = generateFetchURL('/cars', searchParams, params);
+    const response = await fetch(fetchURL, { cache: 'no-cache' });
 
     const data = await response.json();
 
-    return data;
+    return data[0];
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) console.error(error.message);
   }
 };
 
 export async function CatalogComponent({
   searchParams,
+  params,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: SearchParams;
+  params: Params;
 }) {
-  const cars = await fetchCars(searchParams);
+  const cars = await fetchCars(searchParams, params);
+
+  console.group('Fetched cars');
+  console.log('Pagination: ', cars.metadata);
+  console.log('List: ', cars.data);
 
   return (
-    <section className='flex flex-wrap justify-between gap-8 px-10'>
-      {cars.map((car: Car) => (
+    <section className='flex flex-row flex-wrap justify-between gap-10 p-10 bg-gray-100 rounded-lg shadow-xl h-full'>
+      {cars.data?.map((car: Car) => (
         <CarComponent key={car._id + ''} car={car} />
       ))}
     </section>

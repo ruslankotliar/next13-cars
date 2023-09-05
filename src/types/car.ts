@@ -17,7 +17,7 @@ enum FuelType {
 
 type Car = {
   _id: ObjectId;
-  make: string;
+  brand: string;
   model: string;
   year: number;
   color: string;

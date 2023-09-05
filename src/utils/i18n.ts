@@ -1,24 +1,6 @@
 import langParser from 'accept-language-parser';
-import { defaultLocale, dictionaries, locales } from '@/constants';
-import { LocaleSource, ValidLocale } from '@/types';
-
-export const getTranslator = async (locale: ValidLocale) => {
-  const dictionary = await dictionaries[locale]();
-  return (key: string, params?: { [key: string]: string | number }) => {
-    let translation = key
-      .split('.')
-      .reduce((obj, key) => obj && obj[key], dictionary);
-    if (!translation) {
-      return key;
-    }
-    if (params && Object.entries(params).length) {
-      Object.entries(params).forEach(([key, value]) => {
-        translation = translation!.replace(`{{ ${key} }}`, String(value));
-      });
-    }
-    return translation;
-  };
-};
+import { defaultLocale, locales } from '@/constants';
+import { LocaleSource } from '@/types';
 
 export const getLocalePartsFrom = ({ pathname, locale }: LocaleSource) => {
   if (locale) {

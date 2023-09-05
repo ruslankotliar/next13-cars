@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { findBestMatchingLocale, getLocalePartsFrom, pathnameIsMissingValidLocale } from './utils';
+import {
+  findBestMatchingLocale,
+  getLocalePartsFrom,
+  pathnameIsMissingValidLocale,
+} from './utils';
 import { defaultLocale } from './constants';
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+  const { pathname, searchParams } = request.nextUrl;
+  console.log('Requesting route ', pathname + '?' + searchParams);
 
   const defaultLocaleParts = getLocalePartsFrom({ locale: defaultLocale });
   const currentPathnameParts = getLocalePartsFrom({ pathname });
@@ -17,16 +22,24 @@ export function middleware(request: NextRequest) {
 
     if (matchedLocale !== defaultLocale) {
       const matchedLocaleParts = getLocalePartsFrom({ locale: matchedLocale });
+
       return NextResponse.redirect(
         new URL(
-          `/${matchedLocaleParts.lang}/${matchedLocaleParts.country}${pathname}`,
+          `/${matchedLocaleParts.lang}/${matchedLocaleParts.country}${pathname}?${searchParams}`,
           request.url
         )
       );
     } else {
+      console.log(
+        'rewriting ',
+        new URL(
+          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${pathname}?${searchParams}`,
+          request.url
+        ).href
+      );
       return NextResponse.rewrite(
         new URL(
-          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${pathname}`,
+          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${pathname}?${searchParams}`,
           request.url
         )
       );
@@ -41,16 +54,19 @@ export function middleware(request: NextRequest) {
     // we want to REMOVE the default locale from the pathname,
     // and later use a rewrite so that Next will still match
     // the correct code file as if there was a locale in the pathname
+
     return NextResponse.redirect(
       new URL(
-        pathname.replace(
+        `${pathname.replace(
           `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}`,
-          pathname.startsWith('/') ? '/' : ''
-        ),
+          pathname === '/en/us' ? '/' : ''
+        )}?${searchParams}`,
         request.url
       )
     );
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

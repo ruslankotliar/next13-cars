@@ -1,32 +1,43 @@
-export const dynamicParams = false;
-import { Car } from '@/types';
-import { DetailsComponent } from './_components';
+import { Car, Params, SearchParams } from '@/types';
+import { generateFetchURL } from '@/helpers';
+import { DetailsComponent } from '../../_components';
 
-const fetchSingleCar = async (carId: string) => {
+const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
   try {
-    const response = await fetch(`${process.env.URL}/api/cars/${carId}`);
+    const fetchURL = generateFetchURL(
+      `/cars/${params.carId}`,
+      searchParams,
+      params
+    );
+    const response = await fetch(fetchURL);
 
     const data = await response.json();
 
     return data;
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) console.error(error.message);
   }
 };
 
-export default async function Page({ params }: { params: { carId: string } }) {
-  const { carId } = params;
-  const car = await fetchSingleCar(carId);
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  const car: Car = await fetchSingleCar(searchParams, params);
 
   return (
     <section className='w-40 h-auto'>
-      <DetailsComponent car={car} />
+      {car && <DetailsComponent car={car} />}
     </section>
   );
 }
 
 export async function generateStaticParams() {
-  const response = await fetch(`${process.env.URL}/api/cars?`);
+  const fetchURL = generateFetchURL('/cars', {}, {});
+  const response = await fetch(fetchURL);
 
   const cars = await response.json();
 

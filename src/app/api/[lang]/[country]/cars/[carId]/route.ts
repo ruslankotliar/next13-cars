@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getReasonPhrase, connectToDB } from '@/utils';
+import { getReasonPhrase } from '@/utils';
+import { connectToDB } from '@/utils/database';
 import { StatusCodes } from '@/constants';
 import { Car } from '@/models';
+import { Params } from '@/types';
 
-export async function GET(
-  _: Request,
-  { params }: { params: { carId: string } }
-) {
+export async function GET(_: Request, { params }: { params: Params }) {
   try {
     await connectToDB();
 
