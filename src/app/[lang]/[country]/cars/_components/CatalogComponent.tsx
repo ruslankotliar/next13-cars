@@ -11,7 +11,7 @@ const fetchCars = async (searchParams: SearchParams, params: Params) => {
 
     return data[0];
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) console.error(error.message);
   }
 };
 

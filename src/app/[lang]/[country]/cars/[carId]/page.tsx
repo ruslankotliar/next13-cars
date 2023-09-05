@@ -15,7 +15,7 @@ const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
 
     return data;
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) console.error(error.message);
   }
 };
 
@@ -30,7 +30,7 @@ export default async function Page({
 
   return (
     <section className='w-40 h-auto'>
-      <DetailsComponent car={car} />
+      {car && <DetailsComponent car={car} />}
     </section>
   );
 }
