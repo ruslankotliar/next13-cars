@@ -10,7 +10,7 @@ export function CarComponent({ car }: { car: Car }) {
 
   return (
     <div
-      className='w-40 h-auto hover:cursor-pointer'
+      className='hover:cursor-pointer bg-white w-96 p-6 shadow-md rounded-lg'
       onClick={() => router.push(`${pathname}/${car._id}`)}
     >
       <DetailsComponent car={car} />

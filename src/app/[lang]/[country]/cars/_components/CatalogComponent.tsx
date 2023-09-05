@@ -29,7 +29,7 @@ export async function CatalogComponent({
   console.log('List: ', cars.data);
 
   return (
-    <section className='flex flex-wrap justify-between gap-8 px-10'>
+    <section className='flex flex-row flex-wrap justify-between gap-10 p-10 bg-gray-100 rounded-lg shadow-xl h-full'>
       {cars.data?.map((car: Car) => (
         <CarComponent key={car._id + ''} car={car} />
       ))}

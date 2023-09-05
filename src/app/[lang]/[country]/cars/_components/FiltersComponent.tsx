@@ -24,6 +24,7 @@ export function FiltersComponent() {
           router.push(`${pathname}?${createQueryString('model', 'Mustang')}`);
         }}
         data-editable='filters-fetch-button'
+        className='text-black'
       >
         Fetch All Data with Filters!
       </button>

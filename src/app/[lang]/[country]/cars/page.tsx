@@ -10,7 +10,7 @@ export default async function Page({
   params: Params;
 }) {
   return (
-    <div>
+    <div className='h-full'>
       <Suspense>
         <FiltersComponent />
       </Suspense>

@@ -1,9 +1,9 @@
 import './globals.css';
-import { Params, ValidLocale } from '@/types';
+import { Params } from '@/types';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
-import { getLocalePartsFrom, getTranslator } from '@/utils';
+import { getLocalePartsFrom } from '@/utils';
 import { locales } from '@/constants';
 import { LangPickerComponent } from './_components';
 import { Suspense } from 'react';
@@ -24,15 +24,9 @@ export default function Layout({
 }) {
   return (
     <html lang='en'>
-      <body
-        className={(inter.className = ' w-screen min-h-[calc(100vh-4rem)]')}
-      >
-        <div className='relative h-max'>
-          <HeaderComponent params={params} />
-          <main className='absolute top-[calc(4rem)] h-full right-0 w-full'>
-            {children}
-          </main>
-        </div>
+      <body className={inter.className}>
+        <HeaderComponent params={params} />
+        <main className='absolute top-20 w-full z-19'>{children}</main>
       </body>
     </html>
   );
@@ -43,22 +37,18 @@ async function HeaderComponent({
 }: {
   params: Params;
 }) {
-  const translate = await getTranslator(
-    `${lang}-${country?.toUpperCase()}` as ValidLocale // our middleware ensures this is valid
-  );
   return (
-    <header className='absolute top-0 flex justify-around w-full py-5 text-xl z-20 bg-primary-color'>
-      <div>
-        <Link href={`/${lang}/${country}`}>
-          <b data-editable='main-layout-logo'>CarExpert</b>{' '}
-          {translate('header.title', {
-            year: new Date().getFullYear(),
-          })}
-        </Link>
-      </div>
-      <Suspense fallback={<div>Loading</div>}>
-        <LangPickerComponent />
-      </Suspense>
+    <header className='absolute top-0 w-full z-20 py-5 bg-white border-b'>
+      <nav className='flex justify-around items-center h-10 text-xl'>
+        <div>
+          <Link href={`/${lang}/${country}`}>
+            <b data-editable='main-layout-logo'>CarExpert</b>
+          </Link>
+        </div>
+        <Suspense fallback={<div>Loading</div>}>
+          <LangPickerComponent />
+        </Suspense>
+      </nav>
     </header>
   );
 }
