@@ -12,7 +12,7 @@ export default function MainPage({
     'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf';
 
   return (
-    <div className='relative w-full h-[calc(100vh-4rem)]'>
+    <div className='relative w-full h-screen'>
       {/* Background Image */}
       <Image
         src={backgroundImageUrl}

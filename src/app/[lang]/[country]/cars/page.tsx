@@ -11,11 +11,10 @@ export default async function Page({
 }) {
   return (
     <div className='h-full'>
+      <CatalogComponent searchParams={searchParams} params={params} />
       <Suspense>
         <FiltersComponent />
       </Suspense>
-
-      <CatalogComponent searchParams={searchParams} params={params} />
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function Layout({
     <html lang='en'>
       <body className={inter.className}>
         <HeaderComponent params={params} />
-        <main className='absolute top-20 w-full z-19'>{children}</main>
+        <main className='absolute top-0 w-full z-19'>{children}</main>
       </body>
     </html>
   );

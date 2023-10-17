@@ -5,7 +5,7 @@ import { generateFetchURL } from '@/helpers';
 const fetchCars = async (searchParams: SearchParams, params: Params) => {
   try {
     const fetchURL = generateFetchURL('/cars', searchParams, params);
-    const response = await fetch(fetchURL, { cache: 'no-cache' });
+    const response = await fetch(fetchURL);
 
     const data = await response.json();
 
@@ -23,10 +23,6 @@ export async function CatalogComponent({
   params: Params;
 }) {
   const cars = await fetchCars(searchParams, params);
-
-  console.group('Fetched cars');
-  console.log('Pagination: ', cars.metadata);
-  console.log('List: ', cars.data);
 
   return (
     <section className='flex flex-row flex-wrap justify-between gap-10 p-10 bg-gray-100 rounded-lg shadow-xl h-full'>
