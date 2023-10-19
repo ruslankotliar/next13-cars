@@ -3,46 +3,46 @@ import { Params } from '@/types';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
-import { getLocalePartsFrom } from '@/utils';
+
 import { locales } from '@/constants';
 import { LangPickerComponent } from './_components';
 import { Suspense } from 'react';
+import { getLocalePartsFrom } from '@/utils/i18n';
+import { getTranslator } from '@/utils/dictionary';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Cars App',
-  description: 'Application to find a car',
+  description: 'Application to find a car'
 };
 
 export default function Layout({
   children,
-  params,
+  params
 }: {
   children: React.ReactNode;
   params: Params;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={inter.className}>
         <HeaderComponent params={params} />
-        <main className='absolute top-0 w-full z-19'>{children}</main>
+        <main className="absolute top-0 w-full z-19">{children}</main>
       </body>
     </html>
   );
 }
 
-async function HeaderComponent({
-  params: { lang, country },
-}: {
-  params: Params;
-}) {
+async function HeaderComponent({ params: { lang, country } }: { params: Params }) {
+  const t = await getTranslator(lang, country);
+
   return (
-    <header className='absolute top-0 w-full z-20 py-5 bg-white border-b'>
-      <nav className='flex justify-around items-center h-10 text-xl'>
+    <header className="absolute top-0 w-full z-20 py-5 bg-white border-b">
+      <nav className="flex justify-around items-center h-10 text-xl">
         <div>
           <Link href={`/${lang}/${country}`}>
-            <b data-editable='main-layout-logo'>CarExpert</b>
+            <b data-editable="main-layout-logo">{t('main-layout-logo')}</b>
           </Link>
         </div>
         <Suspense fallback={<div>Loading</div>}>

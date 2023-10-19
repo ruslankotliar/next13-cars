@@ -1,14 +1,10 @@
-import { Car, Params, SearchParams } from '@/types';
+import { CarDocument, Params, SearchParams } from '@/types';
 import { generateFetchURL } from '@/helpers';
 import { DetailsComponent } from '../../_components';
 
 const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
   try {
-    const fetchURL = generateFetchURL(
-      `/cars/${params.carId}`,
-      searchParams,
-      params
-    );
+    const fetchURL = generateFetchURL(`/cars/${params.carId}`, params, searchParams);
     const response = await fetch(fetchURL);
 
     const data = await response.json();
@@ -21,27 +17,23 @@ const fetchSingleCar = async (searchParams: SearchParams, params: Params) => {
 
 export default async function Page({
   params,
-  searchParams,
+  searchParams
 }: {
   params: Params;
   searchParams: SearchParams;
 }) {
-  const car: Car = await fetchSingleCar(searchParams, params);
+  const car: CarDocument = await fetchSingleCar(searchParams, params);
 
-  return (
-    <section className='w-40 h-auto'>
-      {car && <DetailsComponent car={car} />}
-    </section>
-  );
+  return <section className="w-40 h-auto">{car && <DetailsComponent car={car} />}</section>;
 }
 
 export async function generateStaticParams() {
-  const fetchURL = generateFetchURL('/cars', {}, {});
+  const fetchURL = generateFetchURL('/cars', {});
   const response = await fetch(fetchURL);
 
   const cars = await response.json();
 
-  return cars.map((car: Car) => ({
-    carId: car._id + '',
+  return cars.map((car: CarDocument) => ({
+    carId: car._id + ''
   }));
 }

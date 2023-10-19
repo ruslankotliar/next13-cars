@@ -1,32 +1,37 @@
-import { ObjectId } from 'mongodb';
+import { Document } from "mongoose";
 
-enum Transmission {
-  Automatic,
-  Manual,
-  CVT,
-  Other,
+enum CarPropsEnum {
+  None, // default value for the undefined in the array
+  Price = 'price',
+  Brand = 'brand',
+  Model = 'model',
+  Year = 'year',
+  TitleStatus = 'title_status',
+  Mileage = 'mileage',
+  Color = 'color',
+  VIN = 'vin',
+  Lot = 'lot',
+  State = 'state',
+  Country = 'country',
+  Condition = 'condition'
 }
-
-enum FuelType {
-  Gasoline,
-  Diesel,
-  Electric,
-  Hybrid,
-  Other,
-}
-
-type Car = {
-  _id: ObjectId;
+interface CarProps {
+  price: number;
   brand: string;
   model: string;
   year: number;
-  color: string;
+  title_status: string;
   mileage: number;
-  owners: string[];
-  transmission: Transmission;
-  fuelType: FuelType;
-  enginePower: number;
-  price: number;
-};
+  color: string;
+  vin: string;
+  lot: string;
+  state: string;
+  country: string;
+  condition: string;
+}
 
-export type { Car };
+interface CarDocument extends Document, CarProps {}
+
+export type { CarProps, CarDocument };
+
+export { CarPropsEnum };

@@ -1,54 +1,58 @@
-import mongoose from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
-const CarSchema = new mongoose.Schema(
-  {
-    make: {
-      type: String,
-      required: true,
-    },
-    model: {
-      type: String,
-      required: true,
-    },
-    year: {
-      type: Number,
-      required: true,
-    },
-    color: {
-      type: String,
-      required: true,
-    },
-    mileage: {
-      type: Number,
-      required: true,
-    },
-    owners: {
-      type: [String],
-      required: true,
-    },
-    transmission: {
-      type: String,
-      enum: ['Automatic', 'Manual', 'CVT', 'Other'],
-      required: true,
-    },
-    fuelType: {
-      type: String,
-      enum: ['Gasoline', 'Diesel', 'Electric', 'Hybrid', 'Other'],
-      required: true,
-    },
-    enginePower: {
-      type: Number,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
+import { CarDocument } from '@/types';
+
+const carSchema = new Schema<CarDocument>({
+  brand: {
+    type: String,
+    required: true
   },
-  {
-    // add createdAt and updatedAt timestamps
-    timestamps: true,
+  model: {
+    type: String,
+    required: true
+  },
+  year: {
+    type: Number,
+    required: true
+  },
+  color: {
+    type: String,
+    required: true
+  },
+  mileage: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  vin: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  lot: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
+  },
+  condition: {
+    type: String,
+    required: true
+  },
+  title_status: {
+    type: String,
+    required: true
   }
-);
+});
 
-export const Car = mongoose.models.Car || mongoose.model('Car', CarSchema);
+export const CarModel = models.Car || model<CarDocument>('Car', carSchema);

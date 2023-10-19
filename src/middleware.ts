@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  findBestMatchingLocale,
-  getLocalePartsFrom,
-  pathnameIsMissingValidLocale,
-} from './utils';
+
 import { defaultLocale } from './constants';
+import { getLocalePartsFrom, pathnameIsMissingValidLocale, findBestMatchingLocale } from './utils/i18n';
 
 export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
@@ -71,5 +68,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // do not localize next.js paths
-  matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)']
 };
