@@ -4,8 +4,11 @@ import { LanguageDocument } from '@/types';
 const languageSchema = new Schema<LanguageDocument>({
   code: {
     type: String,
-    required: true,
-    unique: true
+    required: true
+  },
+  targetWebsiteId: {
+    type: String,
+    required: true
   },
   name: {
     type: String,

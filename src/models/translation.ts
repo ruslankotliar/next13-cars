@@ -5,7 +5,11 @@ import { TranslationDocument } from '@/types';
 const translationSchema = new Schema<TranslationDocument>({
   key: {
     type: String,
-    unique: true
+    required: true
+  },
+  targetWebsiteId: {
+    type: String,
+    required: true
   },
   translations: {
     type: Map,

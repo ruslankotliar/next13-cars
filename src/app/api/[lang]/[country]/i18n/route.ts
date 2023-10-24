@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { StatusCodes } from '@/constants';
-import { Params } from '@/types';
+import { StatusCodes, TARGET_WEBSITE_ID } from '@/constants';
 
 import { TranslationModel } from '@/models/translation';
 
@@ -16,9 +15,12 @@ export async function GET(
   try {
     await connectToDB();
 
-    console.log(lang, country);
-
     const pipeline = [
+      {
+        $match: {
+          targetWebsiteId: TARGET_WEBSITE_ID
+        }
+      },
       {
         $project: {
           _id: 0,
@@ -48,7 +50,8 @@ export async function GET(
 
     const dictionary = await TranslationModel.aggregate(pipeline);
 
-    return NextResponse.json(dictionary[0]);
+    console.log('dict: ', dictionary[0] || {});
+    return NextResponse.json(dictionary[0] || {});
   } catch (e) {
     console.error(e);
     return NextResponse.json(null, {

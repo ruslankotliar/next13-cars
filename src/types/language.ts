@@ -1,5 +1,6 @@
 interface Language {
   code: string;
+  targetWebsiteId: string;
   name: string;
 }
 

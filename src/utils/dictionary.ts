@@ -9,8 +9,6 @@ const fetchDictionary = async (lang: string, country: string) => {
 
     const data = await response.json();
 
-    console.log(data);
-
     return data;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
