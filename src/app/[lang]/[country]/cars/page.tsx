@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { Suspense } from 'react';
 import { FiltersComponent, CatalogComponent } from './_components';
 import { Params, SearchParams } from '@/types';

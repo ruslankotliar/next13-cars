@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { Params } from '@/types';
@@ -7,6 +5,7 @@ import { getTranslator } from '@/utils/dictionary';
 
 export default async function MainPage({ params: { lang, country } = {} }: { params: Params }) {
   const t = await getTranslator(lang, country);
+  console.log(t);
   // Decompose Image URL for clarity and maintainability
   const backgroundImageUrl = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf';
 
