@@ -21,7 +21,7 @@ export function FiltersComponent() {
     <section>
       <button
         onClick={() => {
-          router.push(`${pathname}?${createQueryString('model', 'Mustang')}`);
+          router.push(`${pathname}?${createQueryString('model', 'door')}`);
         }}
         data-editable='filters-fetch-button'
         className='text-black'

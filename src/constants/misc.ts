@@ -1,0 +1,3 @@
+const TARGET_WEBSITE_ID = process.env.TARGET_WEBSITE_ID;
+
+export { TARGET_WEBSITE_ID };

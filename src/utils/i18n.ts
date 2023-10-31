@@ -2,29 +2,29 @@ import langParser from 'accept-language-parser';
 import { defaultLocale, locales } from '@/constants';
 import { LocaleSource } from '@/types';
 
-export const getLocalePartsFrom = ({ pathname, locale }: LocaleSource) => {
+const getLocalePartsFrom = ({ pathname, locale }: LocaleSource) => {
   if (locale) {
     const localeParts = locale.toLowerCase().split('-');
     return {
       lang: localeParts[0],
-      country: localeParts[1],
+      country: localeParts[1]
     };
   } else {
     const pathnameParts = pathname!.toLowerCase().split('/');
     return {
       lang: pathnameParts[1],
-      country: pathnameParts[2],
+      country: pathnameParts[2]
     };
   }
 };
 
-export const pathnameIsMissingValidLocale = (pathname: string) =>
+const pathnameIsMissingValidLocale = (pathname: string) =>
   locales.every((locale) => {
     const localeParts = getLocalePartsFrom({ locale });
     return !pathname.startsWith(`/${localeParts.lang}/${localeParts.country}`);
   });
 
-export const findBestMatchingLocale = (acceptLangHeader: string) => {
+const findBestMatchingLocale = (acceptLangHeader: string) => {
   // parse the locales acceptable in the header, and sort them by priority (q)
   const parsedLangs = langParser.parse(acceptLangHeader);
 
@@ -34,10 +34,7 @@ export const findBestMatchingLocale = (acceptLangHeader: string) => {
     // attempt to match both the language and the country
     const matchedLocale = locales.find((locale) => {
       const localeParts = getLocalePartsFrom({ locale });
-      return (
-        parsedLang.code === localeParts.lang &&
-        parsedLang.region === localeParts.country
-      );
+      return parsedLang.code === localeParts.lang && parsedLang.region === localeParts.country;
     });
     if (matchedLocale) {
       return matchedLocale;
@@ -56,3 +53,7 @@ export const findBestMatchingLocale = (acceptLangHeader: string) => {
   // if we didn't find a match, return the default locale
   return defaultLocale;
 };
+
+const generateLocale = (lang: string, country: string) => `${lang}-${country.toUpperCase()}`;
+
+export { getLocalePartsFrom, pathnameIsMissingValidLocale, findBestMatchingLocale, generateLocale };
