@@ -1,10 +1,10 @@
 'use client';
 
-import { Car } from '@/types';
+import { CarDocument } from '@/types';
 import { usePathname, useRouter } from 'next/navigation';
 import { DetailsComponent } from '../../_components';
 
-export function CarComponent({ car }: { car: Car }) {
+export function CarComponent({ car }: { car: CarDocument }) {
   const router = useRouter();
   const pathname = usePathname();
 

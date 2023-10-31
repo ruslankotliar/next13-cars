@@ -29,6 +29,11 @@ export async function GET(
         }
       },
       {
+        $match: {
+          translation: { $ne: null }
+        }
+      },
+      {
         $group: {
           _id: null,
           translations: {

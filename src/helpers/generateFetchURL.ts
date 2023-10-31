@@ -13,6 +13,6 @@ export const generateFetchURL = (
   });
   const locales = `/${params.lang || defaultLang}/${params.country || defaultCountry}`;
 
-  const modifiedURL = `${process.env.URL}/api${locales}${url}?${currSearchParams}`;
+  const modifiedURL = `${process.env.NEXT_PUBLIC_HOST_URL}/api${locales}${url}?${currSearchParams}`;
   return modifiedURL;
 };

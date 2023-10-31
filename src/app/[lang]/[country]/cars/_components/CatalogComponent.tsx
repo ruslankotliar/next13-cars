@@ -26,7 +26,7 @@ export async function CatalogComponent({
 
   return (
     <section className="flex flex-row flex-wrap justify-between gap-10 p-10 bg-gray-100 rounded-lg shadow-xl h-full">
-      {cars.data?.map((car: CarDocument) => (
+      {cars?.data.map((car: CarDocument) => (
         <CarComponent key={car._id + ''} car={car} />
       ))}
     </section>

@@ -27,13 +27,17 @@ export default async function Page({
   return <section className="w-40 h-auto">{car && <DetailsComponent car={car} />}</section>;
 }
 
-export async function generateStaticParams() {
-  const fetchURL = generateFetchURL('/cars', {});
-  const response = await fetch(fetchURL);
+// generateStaticParams();
 
-  const cars = await response.json();
+// export async function generateStaticParams() {
+//   const fetchURL = generateFetchURL('/cars', {});
+//   const response = await fetch(fetchURL);
 
-  return cars.map((car: CarDocument) => ({
-    carId: car._id + ''
-  }));
-}
+//   const cars = await response.json();
+
+//   console.log(cars[0].data);
+
+//   return cars[0].data.map((car: CarDocument) => ({
+//     carId: car._id + ''
+//   }));
+// }
