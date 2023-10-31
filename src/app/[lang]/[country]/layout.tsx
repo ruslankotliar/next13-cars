@@ -52,7 +52,3 @@ async function HeaderComponent({ params: { lang, country } }: { params: Params }
     </header>
   );
 }
-
-export async function generateStaticParams() {
-  return locales.map((locale) => getLocalePartsFrom({ locale }));
-}
