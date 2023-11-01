@@ -9,6 +9,19 @@ import { LangPickerComponent } from './_components';
 import { Suspense } from 'react';
 import { getLocalePartsFrom } from '@/utils/i18n';
 import { getTranslator } from '@/utils/dictionary';
+import { generateFetchURL } from '@/helpers';
+
+const fetchDictionary = async (url: string) => {
+  try {
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message);
+  }
+};
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,7 +48,8 @@ export default function Layout({
 }
 
 async function HeaderComponent({ params: { lang, country } }: { params: Params }) {
-  const t = await getTranslator(lang, country);
+  const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
+  const t = await getTranslator(dictionary);
 
   return (
     <header className="absolute top-0 w-full z-20 py-5 bg-white border-b">

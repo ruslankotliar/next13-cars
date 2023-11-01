@@ -1,17 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { Params } from '@/types';
 import { getTranslator } from '@/utils/dictionary';
+import { generateFetchURL } from '@/helpers';
+
+const fetchDictionary = async (url: string) => {
+  try {
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message);
+  }
+};
 
 export default async function MainPage({ params: { lang, country } = {} }: { params: Params }) {
-  const t = await getTranslator(lang, country);
-  console.log(t);
+  const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
+  const t = await getTranslator(dictionary);
   // Decompose Image URL for clarity and maintainability
   const backgroundImageUrl = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf';
 
   return (
     <div className="relative w-full h-screen">
-      {/* Background Image */}
       <Image
         src={backgroundImageUrl}
         alt="Picture of the car"

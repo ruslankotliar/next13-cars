@@ -1,29 +1,7 @@
-import { generateFetchURL } from '@/helpers';
-import { getLocalePartsFrom } from './i18n';
-import { defaultLocale } from '@/constants';
-
-const fetchDictionary = async (lang: string, country: string) => {
-  try {
-    const fetchURL = generateFetchURL('/i18n', { lang, country });
-    const response = await fetch(fetchURL);
-
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    if (error instanceof Error) console.error(error.message);
-  }
-};
-
-const getTranslator = async (lang?: string, country?: string) => {
-  const { lang: defaultLang, country: defaultCountry } = getLocalePartsFrom({
-    locale: defaultLocale
-  });
-
-  const dictionary = await fetchDictionary(lang || defaultLang, country || defaultCountry);
-
+const getTranslator = async (dictionary: Record<string, string>) => {
   return (key: string, params?: { [key: string]: string | number }) => {
-    let translation = key.split('.').reduce((obj, key) => obj && obj[key], dictionary);
+    let translation = dictionary[key];
+
     if (!translation) {
       return key;
     }

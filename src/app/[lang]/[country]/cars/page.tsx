@@ -4,6 +4,18 @@ import { Params, SearchParams } from '@/types';
 import { getTranslator } from '@/utils/dictionary';
 import { generateFetchURL } from '@/helpers';
 
+const fetchDictionary = async (url: string) => {
+  try {
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message);
+  }
+};
+
 const fetchCars = async (searchParams: SearchParams, params: Params) => {
   try {
     const fetchURL = generateFetchURL('/cars', params, searchParams);
@@ -24,7 +36,10 @@ export default async function Page({
   searchParams: SearchParams;
   params: Params;
 }) {
-  const t = await getTranslator(params.lang, params.country);
+  const dictionary = await fetchDictionary(
+    generateFetchURL('/i18n', { lang: params.lang, country: params.country })
+  );
+  const t = await getTranslator(dictionary);
   const carsData = await fetchCars(searchParams, params);
   const { data, metadata } = carsData || {};
 
