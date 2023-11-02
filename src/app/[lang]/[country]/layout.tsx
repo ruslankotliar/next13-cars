@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 
-import { locales } from '@/constants';
+import { REVALIDATE_DICT_TIME, locales } from '@/constants';
 import { LangPickerComponent } from './_components';
 import { Suspense } from 'react';
 import { getLocalePartsFrom } from '@/utils/i18n';
@@ -13,7 +13,7 @@ import { generateFetchURL } from '@/helpers';
 
 const fetchDictionary = async (url: string) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: REVALIDATE_DICT_TIME } });
 
     const data = await response.json();
 

@@ -1,3 +1,4 @@
 const TARGET_WEBSITE_ID = process.env.TARGET_WEBSITE_ID;
+const REVALIDATE_DICT_TIME = 60; // one minute
 
-export { TARGET_WEBSITE_ID };
+export { TARGET_WEBSITE_ID, REVALIDATE_DICT_TIME };

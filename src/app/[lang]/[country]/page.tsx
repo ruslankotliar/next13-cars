@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { Params } from '@/types';
 import { getTranslator } from '@/utils/dictionary';
 import { generateFetchURL } from '@/helpers';
+import { REVALIDATE_DICT_TIME } from '@/constants';
 
 const fetchDictionary = async (url: string) => {
   try {
-    const response = await fetch(url);
-
+    const response = await fetch(url, { next: { revalidate: REVALIDATE_DICT_TIME } });
     const data = await response.json();
 
     return data;
