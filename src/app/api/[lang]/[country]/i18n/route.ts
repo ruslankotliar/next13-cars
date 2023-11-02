@@ -7,6 +7,7 @@ import { TranslationModel } from '@/models/translation';
 import { connectToDB } from '@/utils/database';
 import { generateLocale } from '@/utils/i18n';
 import { getReasonPhrase } from '@/utils/response';
+import mongoose, { Schema } from 'mongoose';
 
 export async function GET(
   _: NextRequest,
@@ -15,10 +16,18 @@ export async function GET(
   try {
     await connectToDB();
 
+    const targetWebsiteId = new mongoose.Types.ObjectId(TARGET_WEBSITE_ID);
+
+    if (!TARGET_WEBSITE_ID) {
+      throw new Error('TARGET_WEBSITE_ID is not defined');
+    }
+
+    console.log(targetWebsiteId);
+
     const pipeline = [
       {
         $match: {
-          targetWebsiteId: TARGET_WEBSITE_ID
+          targetWebsiteId
         }
       },
       {
@@ -54,6 +63,8 @@ export async function GET(
     ];
 
     const dictionary = await TranslationModel.aggregate(pipeline);
+
+    console.log(dictionary);
 
     console.log('dict: ', dictionary[0] || {});
     return NextResponse.json(dictionary[0] || {});
