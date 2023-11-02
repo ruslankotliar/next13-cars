@@ -22,8 +22,6 @@ export async function GET(
       throw new Error('TARGET_WEBSITE_ID is not defined');
     }
 
-    console.log(targetWebsiteId);
-
     const pipeline = [
       {
         $match: {
