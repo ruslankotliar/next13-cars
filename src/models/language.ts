@@ -7,7 +7,7 @@ const languageSchema = new Schema<LanguageDocument>({
     required: true
   },
   targetWebsiteId: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
   },
   name: {

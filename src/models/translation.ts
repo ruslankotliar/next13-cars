@@ -8,7 +8,7 @@ const translationSchema = new Schema<TranslationDocument>({
     required: true
   },
   targetWebsiteId: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true
   },
   translations: {

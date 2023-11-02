@@ -1,6 +1,8 @@
+import { Schema } from 'mongoose';
+
 interface Language {
   code: string;
-  targetWebsiteId: string;
+  targetWebsiteId: Schema.Types.ObjectId;
   name: string;
 }
 

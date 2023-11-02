@@ -1,8 +1,8 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 interface TranslationDocument extends Document {
   key: string;
-  targetWebsiteId: string;
+  targetWebsiteId: Schema.Types.ObjectId;
   translations: Record<string, string>;
 }
 

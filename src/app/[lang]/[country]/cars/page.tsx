@@ -39,7 +39,7 @@ export default async function Page({
   const dictionary = await fetchDictionary(
     generateFetchURL('/i18n', { lang: params.lang, country: params.country })
   );
-  const t = await getTranslator(dictionary);
+  const t = getTranslator(dictionary);
   const carsData = await fetchCars(searchParams, params);
   const { data, metadata } = carsData || {};
 

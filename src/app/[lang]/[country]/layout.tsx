@@ -49,7 +49,7 @@ export default function Layout({
 
 async function HeaderComponent({ params: { lang, country } }: { params: Params }) {
   const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
-  const t = await getTranslator(dictionary);
+  const t = getTranslator(dictionary);
 
   return (
     <header className="absolute top-0 w-full z-20 py-5 bg-white border-b">

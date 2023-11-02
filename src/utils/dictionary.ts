@@ -1,4 +1,4 @@
-const getTranslator = async (dictionary: Record<string, string>) => {
+const getTranslator = (dictionary: Record<string, string>) => {
   return (key: string, params?: { [key: string]: string | number }) => {
     let translation = dictionary[key];
 
