@@ -62,9 +62,6 @@ export async function GET(
 
     const dictionary = await TranslationModel.aggregate(pipeline);
 
-    console.log(dictionary);
-
-    console.log('dict: ', dictionary[0] || {});
     return NextResponse.json(dictionary[0] || {});
   } catch (e) {
     console.error(e);

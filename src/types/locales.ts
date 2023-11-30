@@ -1,5 +1,3 @@
-import { locales } from '@/constants';
-
 type LocaleKey = 'lang' | 'country';
 
 type PathnameLocale = {
@@ -13,6 +11,4 @@ type ISOLocale = {
 
 type LocaleSource = PathnameLocale | ISOLocale;
 
-type ValidLocale = (typeof locales)[number];
-
-export type { PathnameLocale, ISOLocale, LocaleSource, ValidLocale, LocaleKey };
+export type { PathnameLocale, ISOLocale, LocaleSource, LocaleKey };

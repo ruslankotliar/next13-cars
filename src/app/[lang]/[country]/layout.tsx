@@ -4,10 +4,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 
-import { REVALIDATE_DICT_TIME, locales } from '@/constants';
+import { REVALIDATE_DICT_TIME } from '@/constants';
 import { LangPickerComponent } from './_components';
 import { Suspense } from 'react';
-import { getLocalePartsFrom } from '@/utils/i18n';
 import { getTranslator } from '@/utils/dictionary';
 import { generateFetchURL } from '@/helpers';
 
@@ -17,6 +16,16 @@ const fetchDictionary = async (url: string) => {
 
     const data = await response.json();
 
+    return data;
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message);
+  }
+};
+
+const fetchLocales = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
@@ -51,6 +60,8 @@ async function HeaderComponent({ params: { lang, country } }: { params: Params }
   const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
   const t = getTranslator(dictionary);
 
+  const locales = await fetchLocales(generateFetchURL('/locales', { lang, country }));
+
   return (
     <header className="absolute top-0 w-full z-20 py-5 bg-white border-b">
       <nav className="flex justify-around items-center h-10 text-xl">
@@ -60,7 +71,7 @@ async function HeaderComponent({ params: { lang, country } }: { params: Params }
           </Link>
         </div>
         <Suspense fallback={<div>Loading</div>}>
-          <LangPickerComponent />
+          <LangPickerComponent locales={locales} />
         </Suspense>
       </nav>
     </header>

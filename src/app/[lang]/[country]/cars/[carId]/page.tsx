@@ -35,8 +35,6 @@ export default async function Page({
 
 //   const cars = await response.json();
 
-//   console.log(cars[0].data);
-
 //   return cars[0].data.map((car: CarDocument) => ({
 //     carId: car._id + ''
 //   }));

@@ -20,7 +20,7 @@ const fetchDictionary = async (url: string) => {
 export default async function MainPage({ params: { lang, country } = {} }: { params: Params }) {
   const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
   const t = getTranslator(dictionary);
-  // Decompose Image URL for clarity and maintainability
+
   const backgroundImageUrl = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf';
 
   return (

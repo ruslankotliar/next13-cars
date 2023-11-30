@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { defaultLocale } from './constants';
-import { getLocalePartsFrom, pathnameIsMissingValidLocale, findBestMatchingLocale } from './utils/i18n';
+import { defaultLocale } from '@/constants';
+import {
+  getLocalePartsFrom,
+  pathnameIsMissingValidLocale,
+  findBestMatchingLocale
+} from '@/utils/i18n';
 
 export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
@@ -17,6 +21,13 @@ export function middleware(request: NextRequest) {
       request.headers.get('Accept-Language') || defaultLocale
     );
 
+    console.log(matchedLocale, defaultLocale, pathname);
+
+    // need this to remove the requested locale which does not exist
+    const splitPathname = pathname.split('/').slice(3).join('/');
+
+    console.log(splitPathname);
+
     if (matchedLocale !== defaultLocale) {
       const matchedLocaleParts = getLocalePartsFrom({ locale: matchedLocale });
 
@@ -30,13 +41,13 @@ export function middleware(request: NextRequest) {
       console.log(
         'rewriting ',
         new URL(
-          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${pathname}?${searchParams}`,
+          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${splitPathname}?${searchParams}`,
           request.url
         ).href
       );
       return NextResponse.rewrite(
         new URL(
-          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${pathname}?${searchParams}`,
+          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}${splitPathname}?${searchParams}`,
           request.url
         )
       );
