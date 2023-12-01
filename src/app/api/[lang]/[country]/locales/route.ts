@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { StatusCodes, TARGET_WEBSITE_ID } from '@/constants';
-import { LanguageModel } from '@/models';
 
 import { connectToDB } from '@/utils/database';
 import { getReasonPhrase } from '@/utils/response';
 import mongoose from 'mongoose';
+import LanguageModel from '@/models/language';
 
 export async function GET(request: NextRequest) {
   try {

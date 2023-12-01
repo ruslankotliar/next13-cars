@@ -19,7 +19,8 @@ export function LangPickerComponent({ locales }: LangPickerComponentProps) {
       locale: e.target.value
     });
 
-    const newPath = pathnameIsMissingValidLocale(pathname)
+    const localesCodes = locales.map(({ code }: Language) => code);
+    const newPath = pathnameIsMissingValidLocale(pathname, localesCodes)
       ? `/${newLang}/${newCountry}${pathname}`
       : pathname.replace(lang as string, newLang).replace(country as string, newCountry);
 

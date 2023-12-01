@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { StatusCodes, TARGET_WEBSITE_ID } from '@/constants';
 
-import { TranslationModel } from '@/models/translation';
+import TranslationModel from '@/models/translation';
 
 import { connectToDB } from '@/utils/database';
 import { generateLocale } from '@/utils/i18n';

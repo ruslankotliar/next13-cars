@@ -1,6 +1,6 @@
 import langParser from 'accept-language-parser';
-import { defaultLocale, locales } from '@/constants';
 import { LocaleSource } from '@/types';
+import { defaultLocale } from '@/constants';
 
 const getLocalePartsFrom = ({ pathname, locale }: LocaleSource) => {
   if (locale) {
@@ -18,14 +18,18 @@ const getLocalePartsFrom = ({ pathname, locale }: LocaleSource) => {
   }
 };
 
-const pathnameIsMissingValidLocale = (pathname: string) =>
+const pathnameIsMissingValidLocale = (pathname: string, locales: string[]) =>
   locales.every((locale) => {
     const localeParts = getLocalePartsFrom({ locale });
     return !pathname.startsWith(`/${localeParts.lang}/${localeParts.country}`);
   });
 
-const findBestMatchingLocale = (acceptLangHeader: string) => {
+const findBestMatchingLocale = (acceptLangHeader: string | null, locales: string[]) => {
   // parse the locales acceptable in the header, and sort them by priority (q)
+  if (!acceptLangHeader) {
+    return defaultLocale;
+  }
+
   const parsedLangs = langParser.parse(acceptLangHeader);
 
   // find the first locale that matches a locale in our list

@@ -13,9 +13,7 @@ import { generateFetchURL } from '@/helpers';
 const fetchDictionary = async (url: string) => {
   try {
     const response = await fetch(url, { next: { revalidate: REVALIDATE_DICT_TIME } });
-
     const data = await response.json();
-
     return data;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
@@ -58,9 +56,8 @@ export default function Layout({
 
 async function HeaderComponent({ params: { lang, country } }: { params: Params }) {
   const dictionary = await fetchDictionary(generateFetchURL('/i18n', { lang, country }));
-  const t = getTranslator(dictionary);
-
   const locales = await fetchLocales(generateFetchURL('/locales', { lang, country }));
+  const t = getTranslator(dictionary);
 
   return (
     <header className="absolute top-0 w-full z-20 py-5 bg-white border-b">

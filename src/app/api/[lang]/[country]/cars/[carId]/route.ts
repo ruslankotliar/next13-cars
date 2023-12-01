@@ -5,7 +5,7 @@ import { StatusCodes } from '@/constants';
 
 import { Params } from '@/types';
 import { getReasonPhrase } from '@/utils/response';
-import { CarModel } from '@/models';
+import CarModel from '@/models/car';
 
 export async function GET(_: Request, { params }: { params: Params }) {
   try {

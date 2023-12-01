@@ -18,5 +18,6 @@ const translationSchema = new Schema<TranslationDocument>({
   }
 });
 
-export const TranslationModel =
+const TranslationModel =
   models.Translation || model<TranslationDocument>('Translation', translationSchema);
+export default TranslationModel;

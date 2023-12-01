@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { StatusCodes } from '@/constants';
-import { CarModel } from '@/models';
+import CarModel from '@/models/car';
 
 import { generateFilters } from '@/helpers';
 

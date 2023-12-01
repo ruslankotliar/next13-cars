@@ -16,4 +16,6 @@ const languageSchema = new Schema<LanguageDocument>({
   }
 });
 
-export const LanguageModel = models.Language || model<LanguageDocument>('Language', languageSchema);
+const LanguageModel = models?.Language || model<LanguageDocument>('Language', languageSchema);
+
+export default LanguageModel;

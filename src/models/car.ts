@@ -55,4 +55,6 @@ const carSchema = new Schema<CarDocument>({
   }
 });
 
-export const CarModel = models.Car || model<CarDocument>('Car', carSchema);
+const CarModel = models.Car || model<CarDocument>('Car', carSchema);
+
+export default CarModel;
