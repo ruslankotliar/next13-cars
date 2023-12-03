@@ -13,9 +13,18 @@ const languageSchema = new Schema<LanguageDocument>({
   name: {
     type: String,
     required: true
+  },
+  isDefault: {
+    type: Boolean,
+    default: false
   }
 });
 
-const LanguageModel = models?.Language || model<LanguageDocument>('Language', languageSchema);
+languageSchema.index(
+  { targetWebsiteId: 1, isDefault: 1 },
+  { unique: true, partialFilterExpression: { isDefault: true } }
+);
+
+const LanguageModel = models.Language || model<LanguageDocument>('Language', languageSchema);
 
 export default LanguageModel;

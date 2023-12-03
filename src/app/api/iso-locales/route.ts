@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 
+// constants
 import { StatusCodes, TARGET_WEBSITE_ID } from '@/constants';
 
+// utils
 import { connectToDB } from '@/utils/database';
 import { getReasonPhrase } from '@/utils/response';
-import mongoose from 'mongoose';
+
+// models
 import LanguageModel from '@/models/language';
+
+interface LocalesAggregation {
+  allLocales: string[];
+  defaultLocale: string;
+  targetWebsiteId: mongoose.Types.ObjectId;
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,14 +24,33 @@ export async function GET(request: NextRequest) {
     if (!TARGET_WEBSITE_ID) {
       throw new Error('TARGET_WEBSITE_ID is not defined');
     }
-    const aggregatedLocales: { id: null; codeValues: string[] }[] = await LanguageModel.aggregate([
+    const pipeline = [
       { $match: { targetWebsiteId } },
-      { $group: { _id: null, codeValues: { $addToSet: '$code' } } }
-    ]);
-    // get existing locales from database
-    const locales: string[] = aggregatedLocales.length > 0 ? aggregatedLocales[0].codeValues : [];
+      {
+        $group: {
+          _id: '$targetWebsiteId',
+          allLocales: { $addToSet: '$code' },
+          defaultLocale: {
+            $max: { $cond: { if: { $eq: ['$isDefault', true] }, then: '$code', else: null } }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          allLocales: 1,
+          defaultLocale: 1
+        }
+      }
+    ];
+    const aggregatedLocales: LocalesAggregation[] =
+      await LanguageModel.aggregate<LocalesAggregation>(pipeline);
 
-    return NextResponse.json(locales);
+    if (aggregatedLocales.length === 0) {
+      throw new Error('No locales found');
+    }
+
+    return NextResponse.json(aggregatedLocales[0]);
   } catch (e) {
     console.error(e);
     return NextResponse.json(null, {

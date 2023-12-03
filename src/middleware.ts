@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { StatusCodes, defaultLocale } from '@/constants';
+import { StatusCodes } from '@/constants';
 import {
   getLocalePartsFrom,
   pathnameIsMissingValidLocale,
   findBestMatchingLocale
 } from '@/utils/i18n';
-import { getReasonPhrase } from './utils/response';
+import { getReasonPhrase } from '@/utils/response';
 
 export async function middleware(request: NextRequest) {
   try {
     // fetch locales from database
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST_URL}/api/iso-locales`);
-    const locales = await res.json();
+    const { allLocales, defaultLocale } = await res.json();
     // get the current pathname and search params
     const { pathname, searchParams } = request.nextUrl;
     console.info('Requesting route ', pathname + '?' + searchParams);
@@ -20,9 +20,13 @@ export async function middleware(request: NextRequest) {
     const defaultLocaleParts = getLocalePartsFrom({ locale: defaultLocale });
     const currentPathnameParts = getLocalePartsFrom({ pathname });
 
-    if (pathnameIsMissingValidLocale(pathname, locales)) {
+    if (pathnameIsMissingValidLocale(pathname, allLocales)) {
       // get locale from user browser settings
-      const matchedLocale = findBestMatchingLocale(request.headers.get('Accept-Language'), locales);
+      const matchedLocale = findBestMatchingLocale(
+        request.headers.get('Accept-Language'),
+        allLocales,
+        defaultLocale
+      );
       if (matchedLocale !== defaultLocale) {
         const matchedLocaleParts = getLocalePartsFrom({ locale: matchedLocale });
         const newUrl = new URL(
