@@ -28,9 +28,9 @@ export default async function MainPage({ params: { lang, country } = {} }: { par
       <Image
         src={backgroundImageUrl}
         alt="Picture of the car"
-        layout="fill"
-        objectFit="cover"
+        fill
         className="absolute z-1"
+        style={{ objectFit: 'cover' }}
       />
 
       <div className="absolute top-0 left-0 flex justify-center items-center h-full w-full z-10">

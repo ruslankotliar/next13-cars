@@ -1,4 +1,5 @@
 import langParser from 'accept-language-parser';
+
 import { LocaleSource } from '@/types';
 import { defaultLocale } from '@/constants';
 
