@@ -10,7 +10,7 @@ import { getReasonPhrase } from './utils/response';
 import { connectToDB } from './utils/database';
 
 export async function middleware(request: NextRequest) {
-  return NextResponse.next();
+  // return NextResponse.next();
   // try {
   //    await connectToDB();
   //   const targetWebsiteId = new mongoose.Types.ObjectId(TARGET_WEBSITE_ID);
@@ -23,11 +23,11 @@ export async function middleware(request: NextRequest) {
   //   ]);
   //   // get existing locales from database
   //   const locales: string[] = aggregatedLocales.length > 0 ? aggregatedLocales[0].codeValues : [];
-  //   const { pathname, searchParams } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
   //   console.log(searchParams);
-  //   console.info('Requesting route ', pathname + '?' + searchParams);
-  //   const defaultLocaleParts = getLocalePartsFrom({ locale: defaultLocale });
-  //   const currentPathnameParts = getLocalePartsFrom({ pathname });
+  console.info('Requesting route ', pathname + '?' + searchParams);
+  const defaultLocaleParts = getLocalePartsFrom({ locale: defaultLocale });
+  const currentPathnameParts = getLocalePartsFrom({ pathname });
   //   if (pathnameIsMissingValidLocale(pathname, locales)) {
   //     // get locale from user browser settings
   //     const matchedLocale = findBestMatchingLocale(request.headers.get('Accept-Language'), locales);
@@ -55,25 +55,25 @@ export async function middleware(request: NextRequest) {
   //       );
   //     }
   //   }
-  //   // Check if the default locale is in the pathname
-  //   if (
-  //     currentPathnameParts.lang === defaultLocaleParts.lang &&
-  //     currentPathnameParts.country === defaultLocaleParts.country
-  //   ) {
-  //     // we want to REMOVE the default locale from the pathname,
-  //     // and later use a rewrite so that Next will still match
-  //     // the correct code file as if there was a locale in the pathname
-  //     return NextResponse.redirect(
-  //       new URL(
-  //         `${pathname.replace(
-  //           `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}`,
-  //           pathname === '/en/us' ? '/' : ''
-  //         )}?${searchParams}`,
-  //         request.url
-  //       )
-  //     );
-  //   }
-  //   return NextResponse.next();
+  // Check if the default locale is in the pathname
+  if (
+    currentPathnameParts.lang === defaultLocaleParts.lang &&
+    currentPathnameParts.country === defaultLocaleParts.country
+  ) {
+    // we want to REMOVE the default locale from the pathname,
+    // and later use a rewrite so that Next will still match
+    // the correct code file as if there was a locale in the pathname
+    return NextResponse.redirect(
+      new URL(
+        `${pathname.replace(
+          `/${defaultLocaleParts.lang}/${defaultLocaleParts.country}`,
+          pathname === '/en/us' ? '/' : ''
+        )}?${searchParams}`,
+        request.url
+      )
+    );
+  }
+  return NextResponse.next();
   // } catch (e) {
   //   console.error(e);
   //   return NextResponse.json(null, {
